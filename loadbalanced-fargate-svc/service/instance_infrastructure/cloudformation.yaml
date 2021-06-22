@@ -88,7 +88,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckIntervalSeconds: 6
-      HealthCheckPath: '{{service_instance.inputs.healthCheck}}'
+      HealthCheckPath: '{{service_instance.inputs.healthcheckpath}}'
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
@@ -113,9 +113,9 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - '{{service_instance.inputs.path}}'
+            - '{{service_instance.inputs.lbpath}}'
       ListenerArn: !Ref PublicLoadBalancerListener
-      Priority: '{{service_instance.inputs.priority}}'
+      Priority: '{{service_instance.inputs.prioritylb}}'
 
   # Enable autoscaling for this service
   ScalableTarget:
