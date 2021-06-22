@@ -88,7 +88,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckIntervalSeconds: 6
-      HealthCheckPath: '{{service_instance.inputs.healthcheckpath}}'
+      HealthCheckPath: '{{service_instance.inputs.ports}}'
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
