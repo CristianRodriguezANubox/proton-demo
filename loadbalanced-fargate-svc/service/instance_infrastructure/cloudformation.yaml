@@ -58,7 +58,7 @@ Resources:
     Type: AWS::ECS::Service
     DependsOn: LoadBalancerRule
     Properties:
-      ServiceName: '{{service.name}}_{{service_instance.name}}'
+      ServiceName: '{{service_instance.inputs.serviceName}}'
       Cluster: '{{environment.outputs.ClusterName}}'
       LaunchType: FARGATE
       DeploymentConfiguration:
@@ -88,7 +88,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckIntervalSeconds: 6
-      HealthCheckPath: /
+      HealthCheckPath: '{{service_instance.inputs.healthCheck}}'
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
@@ -113,9 +113,9 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - '*'
+            - '{{service_instance.inputs.path}}'
       ListenerArn: !Ref PublicLoadBalancerListener
-      Priority: 1
+      Priority: '{{service_instance.inputs.priority}}'
 
   # Enable autoscaling for this service
   ScalableTarget:
